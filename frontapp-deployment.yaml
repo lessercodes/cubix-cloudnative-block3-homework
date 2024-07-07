@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw3-frontapp
+  labels:
+    homework: frontapp
+    training: block3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      homework: frontapp
+  template:
+    metadata:
+      labels:
+        homework: frontapp
+        training: block3
+    spec:
+      containers:
+        - name: frontapp
+          image: quay.io/drsylent/cubix/block3/homework-frontapp:springboot3
+          env:
+            - name: BACK_URL
+              value: http://hw3-backapp-svc.hw3:8081
+            - name: APP_DEFAULT_MESSAGE
+              value: "frontapp"
+          ports:
+            - name: http-frontapp
+              containerPort: 8080
